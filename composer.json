@@ -1,0 +1,18 @@
+{
+	"name": "olicek/form-selectize",
+	"description": "Form extension for Nette framework",
+	"homepage": "https://github.com/Olicek/form-selectize",
+	"authors": [
+		{
+			"name": "Petr Olišar",
+			"homepage": "http://olisar.eu"
+		}
+	],
+	"require": {
+		"php": ">= 5.4.0",
+		"nette/nette": ">2.1.0"
+	},
+	"autoload": {
+		"classmap": ["src/"]
+	}
+}
