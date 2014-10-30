@@ -104,16 +104,22 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	{
 		if(!is_null($value))
 		{
-			$i = 0;
-			foreach($value as $slug)
+			if(is_array($value))
 			{
-				$i++;
-				$idName = $this->options['valueField'];
-				$this->selectizeBack .= $slug->$idName;
-				if($i < count($value))
+				$i = 0;
+				foreach($value as $slug)
 				{
-					$this->selectizeBack .= $this->options['delimiter'];
+					$i++;
+					$idName = $this->options['valueField'];
+					$this->selectizeBack .= $slug->$idName;
+					if($i < count($value))
+					{
+						$this->selectizeBack .= $this->options['delimiter'];
+					}
 				}
+			} else
+			{
+				$this->selectizeBack = $value;
 			}
 		}
 		
@@ -154,7 +160,9 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 			))->data('entity', $this->entity)->data('options', $this->options)->value($this->selectizeBack);
 		} elseif ($this->options['mode'] === 'select')
 		{
-			return Nette\Forms\Helpers::createSelectBox($this->entity)
+			return Nette\Forms\Helpers::createSelectBox($this->entity, [
+					'selected?' => $this->selectizeBack
+				])
 				->name($name)
 				->data('entity', $this->entity)
 				->data('options', $this->options)
