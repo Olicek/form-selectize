@@ -25,7 +25,7 @@ Next step is copy [server-site](https://github.com/Olicek/form-selectize/blob/ma
 Last step is enable the extension using your neon config
 
 ```
-extension:
+extensions:
 	selectize: App\Form\Control\SelectizeExtension
 ```
 
