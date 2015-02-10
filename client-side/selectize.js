@@ -1,22 +1,35 @@
-try {
-	$( ".selectize" ).each(function() {
-		if ($(this).data('options').mode === 'full')
-		{
-			$(this).selectize({
-				plugins: ($(this).data('options').plugins === null ? null : $(this).data('options').plugins),
-				delimiter: $(this).data('options').delimiter,
-				maxItems: $(this).data('options').maxItems,
-				valueField: $(this).data('options').valueField,
-				labelField: $(this).data('options').labelField,
-				searchField: $(this).data('options').searchField,
-				options: $(this).data('entity'),
-				create: ($(this).data('options').create ? true : false)
-			});
-		} else {
-			$(this).selectize({
-				sortField: 'text',
-				create: ($(this).data('options').create ? true : false)
-			});
-		}
-	});
-} catch(err) { console.log('missing selectize!'); }
+
+function selectize(callback)
+{
+	try {
+		$( ".selectize" ).each(function() {
+			var item = $(this);
+			if (item.data('options').mode === 'full') {
+				
+				var valueField = item.data('options').valueField;
+				var labelField = item.data('options').labelField;
+				var options = {
+					plugins: (item.data('options').plugins === null ? null : item.data('options').plugins),
+					delimiter: item.data('options').delimiter,
+					maxItems: item.data('options').maxItems,
+					valueField: valueField,
+					labelField: labelField,
+					searchField: item.data('options').searchField,
+					options: item.data('entity'),
+					create: (item.data('options').create ? true : false)
+				};
+				
+				if (callback !== undefined) {
+					options.render = callback(labelField, valueField);
+				}
+				
+				item.selectize(options);
+			} else {
+				item.selectize({
+					sortField: 'text',
+					create: (item.data('options').create ? true : false)
+				});
+			}
+		});
+	} catch(err) { console.log('missing selectize!'); }
+}
