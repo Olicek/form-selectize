@@ -1,8 +1,12 @@
 
-function selectize(callback)
+function selectize(callback, selector)
 {
 	try {
-		$( ".selectize" ).each(function() {
+		if (selector === undefined) {
+			selector = $('.selectize');
+		}
+		
+		$( selector ).each(function() {
 			var item = $(this);
 			if (item.data('options').mode === 'full') {
 				

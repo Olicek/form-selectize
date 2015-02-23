@@ -100,6 +100,13 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	}
 	
 	
+	public function setClass($class)
+	{
+		$this->options['class'] = $class;
+		return $this;
+	}
+	
+	
 	public function setValue($value)
 	{
 		if(!is_null($value))
@@ -156,7 +163,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 			return Html::el('input', array(
 				'type' => 'text',
 				'name' => $name,
-				'class' => array('selectize form-control text'),
+				'class' => array(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control text'),
 			))->data('entity', $this->entity)->data('options', $this->options)->value($this->selectizeBack);
 		} elseif ($this->options['mode'] === 'select')
 		{
@@ -166,7 +173,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				->name($name)
 				->data('entity', $this->entity)
 				->data('options', $this->options)
-				->class('selectize form-control');
+				->class(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control');
 		}
 	}
 	
