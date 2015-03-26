@@ -24,6 +24,8 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	private $selectize;
 	private $selectizeBack;
 	private $options;
+	private $prompt = FALSE;
+	
 	
 	public function __construct($label = null, array $entity = NULL, array $config = NULL)
 	{
@@ -107,6 +109,28 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	}
 	
 	
+	/**
+	 * Sets first prompt item in select box.
+	 * @param  string
+	 * @return self
+	 */
+	public function setPrompt($prompt)
+	{
+		$this->prompt = $prompt;
+		return $this;
+	}
+
+
+	/**
+	 * Returns first prompt item?
+	 * @return mixed
+	 */
+	public function getPrompt()
+	{
+		return $this->prompt;
+	}
+	
+	
 	public function setValue($value)
 	{
 		if(!is_null($value))
@@ -167,6 +191,8 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 			))->data('entity', $this->entity)->data('options', $this->options)->value($this->selectizeBack);
 		} elseif ($this->options['mode'] === 'select')
 		{
+			$this->entity = $this->prompt === FALSE ?
+				$this->entity : self::arrayUnshiftAssoc($this->entity, '', $this->translate($this->prompt));
 			return Nette\Forms\Helpers::createSelectBox($this->entity, [
 					'selected?' => $this->selectizeBack
 				])
@@ -175,6 +201,14 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				->data('options', $this->options)
 				->class(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control');
 		}
+	}
+	
+	
+	private static function arrayUnshiftAssoc(&$arr, $key, $val)
+	{
+		$arr = array_reverse($arr, true);
+		$arr[$key] = $val;
+		return array_reverse($arr, true);
 	}
 	
 	
