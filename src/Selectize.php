@@ -266,10 +266,10 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	
 	public static function register($method = 'addSelectize', $config)
 	{
-		Nette\Forms\Container::extensionMethod($method, function(Nette\Forms\Container $container, $name, $label, $entity = null, $options = null) use ($config)
+		Nette\Forms\Container::extensionMethod($method, function(Nette\Forms\Container $container, $name, $label, $entity = null, array $options = null) use ($config)
 		{
-			$container[$name] = new Selectize($label, $entity, $config);
-			is_null($options) ?: $container[$name]->setOptions($options);
+			$container[$name] = new Selectize($label, $entity, is_array($options) ?
+				array_replace($config, $options) : $config);
 			return $container[$name];
 		});
 	}
