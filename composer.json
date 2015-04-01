@@ -2,6 +2,7 @@
 	"name": "olicek/form-selectize",
 	"description": "Form extension for Nette framework",
 	"homepage": "https://github.com/Olicek/form-selectize",
+	"license": "GPL-3.0",
 	"authors": [
 		{
 			"name": "Petr Olišar",
