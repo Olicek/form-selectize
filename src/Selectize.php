@@ -170,7 +170,12 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	{
 		if($this->options['mode'] === 'select')
 		{
-			$this->selectizeBack = $this->selectize = $this->getHttpData(Form::DATA_LINE);
+			$value = $this->getHttpData(Form::DATA_LINE);
+			if($value === "")
+			{
+				$value = NULL;
+			}
+			$this->selectizeBack = $this->selectize = $value;
 		} else
 		{
 			$this->prepareData();
