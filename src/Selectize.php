@@ -25,8 +25,8 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	private $selectizeBack;
 	private $options;
 	private $prompt = FALSE;
-	
-	
+
+
 	public function __construct($label = null, array $entity = NULL, array $config = NULL)
 	{
 		parent::__construct($label);
@@ -34,8 +34,8 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 		$this->labelName = $label;
 		$this->options = $config;
 	}
-	
-	
+
+
 	public function setOptions(array $options)
 	{
 		foreach($options as $key => $value)
@@ -44,71 +44,71 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 		}
 		return $this;
 	}
-	
-	
+
+
 	public function setMode($mode)
 	{
 		$this->options['mode'] = $mode;
 		return $this;
 	}
-	
-	
+
+
 	public function setCreate($create)
 	{
 		$this->options['create'] = $create;
 		return $this;
 	}
-	
-	
+
+
 	public function maxItems($items)
 	{
 		$this->options['maxItems'] = $items;
 		return $this;
 	}
-	
-	
+
+
 	public function setDelimiter($delimiter)
 	{
 		$this->options['delimiter'] = $delimiter;
 		return $this;
 	}
-	
-	
+
+
 	public function setPlugins(array $plugins)
 	{
 		$this->options['plugins'] = $plugins;
 		return $this;
 	}
-	
-	
+
+
 	public function setValueField($valueField)
 	{
 		$this->options['valueField'] = $valueField;
 		return $this;
 	}
-	
-	
+
+
 	public function setLableField($lableField)
 	{
 		$this->options['lableField'] = $lableField;
 		return $this;
 	}
-	
-	
+
+
 	public function setSearchField($searchField)
 	{
 		$this->options['searchField'] = $searchField;
 		return $this;
 	}
-	
-	
+
+
 	public function setClass($class)
 	{
 		$this->options['class'] = $class;
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Sets first prompt item in select box.
 	 * @param  string
@@ -129,8 +129,8 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	{
 		return $this->prompt;
 	}
-	
-	
+
+
 	public function setValue($value)
 	{
 		if(!is_null($value))
@@ -153,31 +153,36 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				$this->selectizeBack = $value;
 			}
 		}
-		
+
 		$this->selectize = $this->selectizeBack;
 	}
-	
-	
+
+
 	public function getValue()
 	{
 		return count($this->selectize)
 			? $this->selectize
 			: NULL;
 	}
-	
-	
+
+
 	public function loadHttpData()
 	{
 		if($this->options['mode'] === 'select')
 		{
-			$this->selectize = $this->getHttpData(Form::DATA_LINE);
+			$value = $this->getHttpData(Form::DATA_LINE);
+			if($value === "")
+			{
+				$value = NULL;
+			}
+			$this->selectizeBack = $this->selectize = $value;
 		} else
 		{
 			$this->prepareData();
 		}
 	}
-	
-	
+
+
 	public function getControl()
 	{
 		$this->setOption('rendered', TRUE);
@@ -202,16 +207,16 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				->class(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control');
 		}
 	}
-	
-	
+
+
 	private static function arrayUnshiftAssoc(&$arr, $key, $val)
 	{
 		$arr = array_reverse($arr, true);
 		$arr[$key] = $val;
 		return array_reverse($arr, true);
 	}
-	
-	
+
+
 	private function prepareData()
 	{
 		$this->selectize = $this->split($this->getHttpData(Form::DATA_LINE));
@@ -229,17 +234,17 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 			}
 		}
 	}
-	
-	
+
+
 	private function split($selectize)
 	{
 		$return = \Nette\Utils\Strings::split($selectize, '~'.$this->options['delimiter'].'\s*~');
 		return $return[0] === "" ? [] : $return;
 	}
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 * @author <brouwer.p@gmail.com>
 	 * @param array $array
 	 * @param type $value
@@ -248,22 +253,25 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	 */
 	private function myInArray(array $array, $value, $key)
 	{
-		foreach ($array as $val) 
+		if(isset($array[$key]) AND $array[$key]==$value)
+		{
+			return true;
+		}
+
+		foreach ($array as $val)
 		{
 			if (is_array($val))
 			{
 				if($this->myInArray($val,$value,$key))
-				return true;
-			} else
-			{
-				if($array[$key]==$value)
-				return true;
+				{
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-	
-	
+
+
 	public static function register($method = 'addSelectize', $config)
 	{
 		Nette\Forms\Container::extensionMethod($method, function(Nette\Forms\Container $container, $name, $label, $entity = null, array $options = null) use ($config)
