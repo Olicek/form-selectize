@@ -88,9 +88,9 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	}
 
 
-	public function setLableField($lableField)
+	public function setLabelField($labelField)
 	{
-		$this->options['lableField'] = $lableField;
+		$this->options['labelField'] = $labelField;
 		return $this;
 	}
 
