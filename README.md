@@ -5,7 +5,7 @@ Form extension for Nette framework
 
 ## Requirements
 
-* Nette 2.1+
+* Nette 2.2+
 * jQuery 1.8+
 * [Selectize] (https://github.com/brianreavis/selectize.js)
 
