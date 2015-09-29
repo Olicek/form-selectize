@@ -11,7 +11,11 @@
 	],
 	"require": {
 		"php": ">= 5.4.0",
-		"nette/nette": ">2.1.0"
+		"nette/di": ">= 2.2.0",
+		"nette/forms": ">= 2.2.0",
+		"nette/php-generator": ">= 2.2.0",
+		"nette/utils": ">= 2.2.0"
+		
 	},
 	"autoload": {
 		"classmap": ["src/"]
