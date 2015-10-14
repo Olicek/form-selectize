@@ -135,6 +135,11 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	{
 		if(!is_null($value))
 		{
+			if ($value instanceof Nette\Database\Table\Selection)
+			{
+				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAll()");
+			}
+			
 			if(is_array($value))
 			{
 				$i = 0;
