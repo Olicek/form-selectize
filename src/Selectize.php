@@ -137,17 +137,18 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 		{
 			if ($value instanceof Nette\Database\Table\Selection)
 			{
-				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAll()");
+				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAssoc($key)");
 			}
 			
 			if(is_array($value))
 			{
 				$i = 0;
-				foreach($value as $slug)
+				foreach($value as $key => $slug)
 				{
 					$i++;
 					$idName = $this->options['valueField'];
-					$this->selectizeBack .= $slug->$idName;
+					$this->selectizeBack .= isset($slug->$idName) ? $slug->$idName : $key;
+					
 					if($i < count($value))
 					{
 						$this->selectizeBack .= $this->options['delimiter'];
