@@ -139,7 +139,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 			{
 				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAssoc($key)");
 			}
-			
+
 			if(is_array($value))
 			{
 				$i = 0;
@@ -148,7 +148,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 					$i++;
 					$idName = $this->options['valueField'];
 					$this->selectizeBack .= isset($slug->$idName) ? $slug->$idName : $key;
-					
+
 					if($i < count($value))
 					{
 						$this->selectizeBack .= $this->options['delimiter'];
@@ -196,6 +196,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 		if($this->options['mode'] === 'full')
 		{
 			return Html::el('input', array(
+				'id' => $this->getHtmlId(),
 				'type' => 'text',
 				'name' => $name,
 				'class' => array(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control text'),
@@ -207,6 +208,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 			return Nette\Forms\Helpers::createSelectBox($this->entity, [
 					'selected?' => $this->selectizeBack
 				])
+				->id($this->getHtmlId())
 				->name($name)
 				->data('entity', $this->entity)
 				->data('options', $this->options)

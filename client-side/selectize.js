@@ -12,6 +12,13 @@ function selectize(callback, selector, customOptions)
 
 	$( selector ).each(function() {
 		var item = $(this);
+
+		// label click focus
+		$('label[for=' + item.attr('id') + ']')
+			.on('click', function() {
+				item.next().find('input').focus();
+			});
+
 		if (item.data('options').mode === 'full') {
 
 			var valueField = item.data('options').valueField;
