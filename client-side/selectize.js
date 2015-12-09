@@ -30,7 +30,7 @@ function selectize(callback, selector, customOptions)
 				valueField: valueField,
 				labelField: labelField,
 				searchField: item.data('options').searchField,
-				options: item.data('entity'),
+				options: ((typeof item.data('options').ajaxURL === 'undefined') ? item.data('entity') : null),
 				create: (item.data('options').create ? true : false),
 			};
 
@@ -43,7 +43,6 @@ function selectize(callback, selector, customOptions)
 				options = customOptions(options);
 			}
 
-			item.selectize(options);
 		} else {
 			var options = {
 				sortField: 'text',
@@ -55,7 +54,35 @@ function selectize(callback, selector, customOptions)
 				options = customOptions(options);
 			}
 
-			item.selectize(options);
 		}
+
+		if (typeof item.data('options').ajaxURL !== 'undefined')
+		{
+			options = $.extend(options,
+					{
+						load: function(query, callback) {
+							if (!query.length || query.length < 3) return callback();
+							$.ajax({
+								url: item.data('options').ajaxURL,
+								data: {query: query},
+								type: 'GET',
+								error: function() {
+									console.error('AJAX error');
+									callback();
+								},
+								success: function(res) {
+									if (res != [])
+									{
+										options.options = res;
+										callback(res);
+									}
+								}
+							});
+						}
+					}
+			);
+		}
+
+		item.selectize(options);
 	});
 }

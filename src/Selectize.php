@@ -109,6 +109,13 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	}
 
 
+	public function setAjaxURL($ajaxURL)
+	{
+		$this->options['ajaxURL'] = $ajaxURL;
+		return $this;
+	}
+
+
 	/**
 	 * Sets first prompt item in select box.
 	 * @param  string
