@@ -144,7 +144,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 		{
 			if ($value instanceof Nette\Database\Table\Selection)
 			{
-				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAssoc($key)");
+				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAssoc(\$key)");
 			}
 
 			if(is_array($value))
@@ -200,14 +200,18 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	{
 		$this->setOption('rendered', TRUE);
 		$name = $this->getHtmlName();
+		$el = clone $this->control;
 		if($this->options['mode'] === 'full')
 		{
-			return Html::el('input', array(
+			return $el->addAttributes([
 				'id' => $this->getHtmlId(),
 				'type' => 'text',
 				'name' => $name,
 				'class' => array(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control text'),
-			))->data('entity', $this->entity)->data('options', $this->options)->value($this->selectizeBack);
+				'data-entity' => $this->entity,
+				'data-options' => $this->options,
+				'value' => $this->selectizeBack
+			]);
 		} elseif ($this->options['mode'] === 'select')
 		{
 			$this->entity = $this->prompt === FALSE ?
@@ -219,7 +223,8 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				->name($name)
 				->data('entity', $this->entity)
 				->data('options', $this->options)
-				->class(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control');
+				->class(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control')
+					->addAttributes(parent::getControl()->attrs);
 		}
 	}
 
