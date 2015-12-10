@@ -224,7 +224,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				->data('entity', $this->entity)
 				->data('options', $this->options)
 				->class(isset($this->options['class']) ? $this->options['class'] : 'selectize' . ' form-control')
-					->addAttributes(parent::getControl()->attrs);
+				->addAttributes(parent::getControl()->attrs);
 		}
 	}
 
