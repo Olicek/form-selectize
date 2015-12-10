@@ -34,6 +34,11 @@ function selectize(callback, selector, customOptions)
 				create: (item.data('options').create ? true : false),
 			};
 
+			if (item.attr('placeholder') !== 'undefined')
+			{
+				options['placeholder'] = item.attr('placeholder');
+			}
+
 			if (callback !== undefined) {
 				options.render = callback(labelField, valueField);
 			}
