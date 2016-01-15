@@ -1,6 +1,8 @@
 form-selectize
 ==============
 
+[![Latest stable](https://img.shields.io/packagist/v/olicek/form-selectize.svg)](https://packagist.org/packages/olicek/form-selectize) [![Packagist](https://img.shields.io/packagist/dt/olicek/form-selectize.svg)](https://packagist.org/packages/olicek/form-selectize)
+
 Form extension for Nette framework
 
 ## Requirements
