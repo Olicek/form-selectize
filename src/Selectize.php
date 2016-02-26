@@ -8,6 +8,7 @@
 
 namespace App\Form\Control;
 
+use Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper;
 use Nette;
 use Nette\Forms\Form,
 	Nette\Utils\Html;
@@ -147,7 +148,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAssoc(\$key)");
 			}
 
-			if(is_array($value))
+			if(is_array($value) || $value instanceof ReadOnlyCollectionWrapper)
 			{
 				$i = 0;
 				foreach($value as $key => $slug)
