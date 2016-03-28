@@ -1,0 +1,25 @@
+{
+  "name": "selectize-for-nette",
+  "description": "Integration selectize for Nette Framework",
+  "main": [
+    "client-side/selectize.js"
+  ],
+  "dependencies": {
+    "jquery": ">1.8",
+    "selectize": "~0.12.1"
+  },
+  "authors": [
+    "Petr Olišar https://github.com/Olicek"
+  ],
+  "ignore": [
+    "src",
+    "composer.json"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "selectize",
+    "tabs",
+    "form",
+    "nette"
+  ]
+}
