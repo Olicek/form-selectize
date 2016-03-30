@@ -31,7 +31,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	public function __construct($label = null, array $entity = NULL, array $config = NULL)
 	{
 		parent::__construct($label);
-		$this->entity = $entity;
+		$this->entity = is_null($entity) ? [] : $entity;
 		$this->labelName = $label;
 		$this->options = $config;
 	}
