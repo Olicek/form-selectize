@@ -8,10 +8,10 @@
 
 namespace App\Form\Control;
 
+use Doctrine\ORM\PersistentCollection;
 use Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper;
 use Nette;
-use Nette\Forms\Form,
-	Nette\Utils\Html;
+use Nette\Forms\Form;
 
 /**
  * Description of Selectize
@@ -148,7 +148,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				throw new Nette\InvalidArgumentException("Type must be array, instance of Nette\\Database\\Table\\Selection was given. Try Selection::fetchAssoc(\$key)");
 			}
 
-			if(is_array($value) || $value instanceof ReadOnlyCollectionWrapper)
+			if(is_array($value) || $value instanceof ReadOnlyCollectionWrapper || $value instanceof PersistentCollection)
 			{
 				$i = 0;
 				foreach($value as $key => $slug)
