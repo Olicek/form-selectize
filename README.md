@@ -7,8 +7,8 @@ Form extension for Nette framework
 
 ## More documentations
 
-[javascript settings] (https://github.com/Olicek/form-selectize/blob/master/docs/en/javascript.md)
-[ajax] (https://github.com/Olicek/form-selectize/blob/master/docs/en/ajax.md)
+* [javascript settings] (https://github.com/Olicek/form-selectize/blob/master/docs/en/javascript.md)
+* [ajax] (https://github.com/Olicek/form-selectize/blob/master/docs/en/ajax.md)
 
 ## Requirements
 
