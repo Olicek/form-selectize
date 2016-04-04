@@ -1,93 +1,134 @@
+/**
+ * Created by petr on 30.3.16.
+ */
 
-function selectize(callback, selector, customOptions)
+
+if ($.fn.selectize === undefined) {
+    console.error('Plugin "selectize.js" is missing! Run `bower install selectize` and load it. Or install this plugin (selectzie-for-nette) via bower.');
+}
+
+var SelectizeForNette = SelectizeForNette || {};
+
+SelectizeForNette = function(element, customSettings)
 {
-	if ($.fn.selectize === undefined) {
-		console.error('Plugin "selectize.js" is missing! Run `bower install selectize` and load it.');
-		return;
-	}
+    if (typeof customSettings !== 'object' && typeof customSettings !== 'undefined') {
+        console.error('second parameter must be object or undefined. Type of ' + typeof customSettings + ' given');
+    }
 
-	if (selector === undefined) {
-		selector = $('.selectize');
-	}
+    this.element = element;
+    this.settings = {};
+    this.options = {};
 
-	$( selector ).each(function() {
-		var item = $(this);
+    if (typeof customSettings === 'undefined') {
+        this.customOptions;
+        this.customRender;
+        this.customAjax;
 
-		// label click focus
-		$('label[for=' + item.attr('id') + ']')
-			.on('click', function() {
-				item.next().find('input').focus();
-			});
+    } else {
+        this.customOptions = typeof customSettings.customOptions === 'undefined' ? undefined : customSettings.customOptions;
+        this.customRender = typeof customSettings.customRender === 'undefined' ? undefined : customSettings.customRender;
+        this.customAjax = typeof customSettings.customAjax === 'undefined' ? undefined : customSettings.customAjax;
+    }
 
-		if (item.data('options').mode === 'full') {
+    this.init();
+};
 
-			var valueField = item.data('options').valueField;
-			var labelField = item.data('options').labelField;
-			var options = {
-				plugins: (item.data('options').plugins === null ? null : item.data('options').plugins),
-				delimiter: item.data('options').delimiter,
-				maxItems: item.data('options').maxItems,
-				valueField: valueField,
-				labelField: labelField,
-				searchField: item.data('options').searchField,
-				options: ((typeof item.data('options').ajaxURL === 'undefined') ? item.data('entity') : null),
-				create: (item.data('options').create ? true : false),
-			};
+SelectizeForNette.prototype = {
 
-			if (item.attr('placeholder') !== 'undefined')
-			{
-				options['placeholder'] = item.attr('placeholder');
-			}
+    constructor: SelectizeForNette,
 
-			if (callback !== undefined) {
-				options.render = callback(labelField, valueField);
-			}
+    init: function()
+    {
+        var base = this;
+        this.setProperties();
 
-			if (customOptions !== undefined)
-			{
-				options = customOptions(options);
-			}
+        $('label[for=' + this.element.attr('id') + ']')
+            .on('click', function() {
+                base.element.next().find('input').focus();
+            });
 
-		} else {
-			var options = {
-				sortField: 'text',
-				create: (item.data('options').create ? true : false)
-			};
+        return this;
+    },
 
-			if (customOptions !== undefined)
-			{
-				options = customOptions(options);
-			}
+    setProperties: function()
+    {
+        this.settings = this.element.data('options');
 
-		}
+        this.options = {
+            plugins: (this.settings.plugins === null ? null : this.settings.plugins),
+            create: this.settings.create,
+            delimiter: this.settings.delimiter,
+            maxItems: this.settings.mode === 'select' ? 1 : this.settings.maxItems,
+            valueField: this.settings.valueField,
+            labelField: this.settings.labelField,
+            searchField: this.settings.searchField,
+            options: typeof this.settings.ajaxURL === 'undefined' ? Array.prototype.slice.call(this.element.data('entity')) : null
+        };
 
-		if (typeof item.data('options').ajaxURL !== 'undefined')
-		{
-			options = $.extend(options,
-					{
-						load: function(query, callback) {
-							if (!query.length || query.length < 3) return callback();
-							$.ajax({
-								url: item.data('options').ajaxURL,
-								data: {query: query},
-								type: 'GET',
-								error: function() {
-									console.error('AJAX error');
-									callback();
-								},
-								success: function(res) {
-									if (res != [])
-									{
-										options.options = res;
-										callback(res);
-									}
-								}
-							});
-						}
-					}
-			);
-		}
+        if (this.element.attr('placeholder') !== 'undefined')
+        {
+            this.options['placeholder'] = this.element.attr('placeholder');
+        }
 
-		item.selectize(options);
-	});
+        return this;
+    },
+
+    create: function()
+    {
+        var base = this;
+        if (typeof this.settings.ajaxURL !== 'undefined') {
+            if (typeof this.customAjax !== "undefined") {
+                this.options.load = this.customAjax.call(this, this.options, this.settings.ajaxURL);
+
+            } else {
+                this.options.load = function(query, callback) {
+                    if (!query.length || query.length < 3) return callback();
+                    $.ajax({
+                        url: base.settings.ajaxURL,
+                        data: {query: query},
+                        type: 'GET',
+                        error: function() {
+                            console.error('AJAX error');
+                            callback();
+                        },
+                        success: function(res) {
+                            if (res.length)
+                            {
+                                callback(res);
+                            }
+                        }
+                    });
+                };
+            }
+        }
+
+        if (typeof this.customOptions !== "undefined") {
+            this.customOptions.call(this, this.options);
+        }
+
+        if (typeof this.customRender !== "undefined") {
+            this.options.render = this.customRender.call(this, this.options);
+        }
+
+        this.element.selectize(this.options);
+    }
+
+};
+
+
+
+function selectize(selector, customSettings)
+{
+    if (selector === undefined) {
+        selector = $('.selectize');
+    }
+
+    $( selector ).each(function() {
+        if ($(this).data('options') == undefined) {
+            return;
+        }
+
+        var mySelectize = new SelectizeForNette($(this), customSettings);
+        mySelectize.create();
+    });
 }

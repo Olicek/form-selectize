@@ -5,6 +5,11 @@ form-selectize
 
 Form extension for Nette framework
 
+## More documentations
+
+[javascript settings] (https://github.com/Olicek/form-selectize/blob/master/docs/en/javascript.md)
+[ajax] (https://github.com/Olicek/form-selectize/blob/master/docs/en/ajax.md)
+
 ## Requirements
 
 * Nette 2.2+
@@ -16,13 +21,15 @@ Form extension for Nette framework
 The best way to install olicek/form-selectize is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require olicek/form-selectize:dev-master
+$ composer require olicek/form-selectize
 ```
 
 After installation server site, you have to install client site. 
-Download from [brianreavis/selectize.js](https://github.com/brianreavis/selectize.js/tree/master/dist) or use [bower](http://bower.io/search/?q=selectize)
+The best way is use [bower](http://bower.io/search/?q=selectize-for-nette).
 
-Next step is copy [server-site](https://github.com/Olicek/form-selectize/blob/master/client-side/selectize.js) script from this extension to www dir and link it to appliacation.
+Link `selectize.js` and call somewhere function `selectize()`.
+
+| NOTE: If you need use previous javascript, it is available in selectize-old.js
 
 Last step is enable the extension using your neon config
 
