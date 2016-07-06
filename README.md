@@ -27,7 +27,7 @@ $ composer require olicek/form-selectize
 After installation server site, you have to install client site. 
 The best way is use [bower](http://bower.io/search/?q=selectize-for-nette).
 
-Link `selectize.js` and call somewhere function `selectize()`.
+Link `selectize.js` from **client-side** and original `selectize.js` and call somewhere function `selectize()`.
 
 | NOTE: If you need use previous javascript, it is available in selectize-old.js
 
