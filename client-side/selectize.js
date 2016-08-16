@@ -53,7 +53,7 @@ SelectizeForNette.prototype = {
     setProperties: function()
     {
         this.settings = this.element.data('options');
-
+        var entity = Array.prototype.slice.call(this.element.data('entity'));
         this.options = {
             plugins: (this.settings.plugins === null ? null : this.settings.plugins),
             create: this.settings.create,
@@ -62,7 +62,8 @@ SelectizeForNette.prototype = {
             valueField: this.settings.valueField,
             labelField: this.settings.labelField,
             searchField: this.settings.searchField,
-            options: typeof this.settings.ajaxURL === 'undefined' ? Array.prototype.slice.call(this.element.data('entity')) : null
+            options: typeof this.settings.ajaxURL === 'undefined' ? entity :
+                entity.filter(function (entity) { return entity.id == this.element.val(); })
         };
 
         if (this.element.attr('placeholder') !== 'undefined')
