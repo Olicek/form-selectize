@@ -23,6 +23,7 @@ function selectize(callback, selector, customOptions)
 
 			var valueField = item.data('options').valueField;
 			var labelField = item.data('options').labelField;
+			var entity = item.data('entity');
 			var options = {
 				plugins: (item.data('options').plugins === null ? null : item.data('options').plugins),
 				delimiter: item.data('options').delimiter,
@@ -30,7 +31,8 @@ function selectize(callback, selector, customOptions)
 				valueField: valueField,
 				labelField: labelField,
 				searchField: item.data('options').searchField,
-				options: ((typeof item.data('options').ajaxURL === 'undefined') ? item.data('entity') : null),
+				options: ((typeof item.data('options').ajaxURL === 'undefined') ? item.data('entity') :
+					entity.filter(function (entity) { console.log(item.val()); return entity.id == item.val() })),
 				create: (item.data('options').create ? true : false),
 			};
 
