@@ -201,8 +201,12 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	{
 		$this->setOption('rendered', TRUE);
 		$name = $this->getHtmlName();
-		$el = clone $this->control;
-		if($this->options['mode'] === 'full')
+        $el = clone $this->control;
+        if (array_key_exists('ajaxURL', $this->options))
+        {
+            $this->entity = $this->findActiveValue($this->entity, 'id', $this->selectizeBack);
+        }
+        if($this->options['mode'] === 'full')
 		{
 			return $el->addAttributes([
 				'id' => $this->getHtmlId(),
@@ -228,6 +232,23 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 				->addAttributes(parent::getControl()->attrs);
 		}
 	}
+
+    function findActiveValue($array, $key, $value)
+    {
+        $results = array();
+
+        if (is_array($array)) {
+            if (isset($array[$key]) && $array[$key] == $value) {
+                $results[] = $array;
+            }
+
+            foreach ($array as $subarray) {
+                $results = array_merge($results, $this->findActiveValue($subarray, $key, $value));
+            }
+        }
+
+        return $results;
+    }
 
 
 	private static function arrayUnshiftAssoc(&$arr, $key, $val)
