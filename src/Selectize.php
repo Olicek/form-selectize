@@ -204,7 +204,7 @@ class Selectize extends Nette\Forms\Controls\BaseControl
         $el = clone $this->control;
         if (array_key_exists('ajaxURL', $this->options))
         {
-            $this->entity = $this->findActiveValue($this->entity, 'id', $this->selectizeBack);
+            $this->entity = $this->findActiveValue($this->entity, $this->options['valueField'], $this->selectizeBack);
         }
         if($this->options['mode'] === 'full')
 		{
