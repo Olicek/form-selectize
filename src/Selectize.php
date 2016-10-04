@@ -139,6 +139,17 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 	}
 
 
+    /**
+     * Sets options and option groups from which to choose.
+     * @param array $items
+     * @return array
+     */
+    public function setItems(array $items)
+    {
+        return $this->entity = $items;
+    }
+
+
 	public function setValue($value)
 	{
 		if(!is_null($value))

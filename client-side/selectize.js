@@ -16,6 +16,7 @@ SelectizeForNette = function(element, customSettings)
     }
 
     this.element = element;
+    this.selectize = {};
     this.settings = {};
     this.options = {};
 
@@ -60,9 +61,13 @@ SelectizeForNette.prototype = {
             maxItems: this.settings.mode === 'select' ? 1 : this.settings.maxItems,
             valueField: this.settings.valueField,
             labelField: this.settings.labelField,
-            searchField: this.settings.searchField,
-            options: Array.prototype.slice.call(this.element.data('entity'))
+            searchField: this.settings.searchField
         };
+
+        if (this.settings.mode === 'full')
+        {
+            this.options['options'] = Array.prototype.slice.call(this.element.data('entity'));
+        }
 
         if (this.element.attr('placeholder') !== 'undefined')
         {
@@ -70,6 +75,11 @@ SelectizeForNette.prototype = {
         }
 
         return this;
+    },
+
+    getSelectize: function()
+    {
+        return this.selectize[0].selectize;
     },
 
     create: function()
@@ -109,7 +119,8 @@ SelectizeForNette.prototype = {
             this.options.render = this.customRender.call(this, this.options);
         }
 
-        this.element.selectize(this.options);
+        this.selectize = this.element.selectize(this.options);
+        return this;
     }
 
 };
