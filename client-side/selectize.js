@@ -38,6 +38,8 @@ SelectizeForNette.prototype = {
 
     constructor: SelectizeForNette,
 
+    minSearchLength: 3,
+
     init: function()
     {
         var base = this;
@@ -91,7 +93,7 @@ SelectizeForNette.prototype = {
 
             } else {
                 this.options.load = function(query, callback) {
-                    if (!query.length || query.length < 3) return callback();
+                    if (!query.length || query.length < this.minSearchLength) return callback();
                     $.ajax({
                         url: base.settings.ajaxURL,
                         data: {query: query},
