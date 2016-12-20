@@ -46,3 +46,15 @@ with valueField and labelField columns set before. Response from this handler lo
     ...
 }
 ```
+
+## Minimal letters count to start searching:
+
+After typing more than 3 letters, ajax searching call will be triggered. If you want to change default value, 
+just add this line before your selectize() call.
+
+```
+SelectizeForNette.minSearchLength: yourNumber;
+```
+
+
+
