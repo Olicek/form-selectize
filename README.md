@@ -70,6 +70,16 @@ id is set as valueField and name as labelField and searchField in config.neon. Y
 valueField: slug
 ```
 
+## Data in array for select mode
+
+Data for select mode are same as for SelectBox:
+
+```
+array (2)
+	1 => "First item",
+	2 => "Second item"
+```
+
 ## Using
 
 #### Default settings from config.neon
