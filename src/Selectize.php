@@ -149,6 +149,15 @@ class Selectize extends Nette\Forms\Controls\BaseControl
         return $this->entity = $items;
     }
 
+	
+	/**
+	* Gets items
+	* @return array
+	*/
+	public function getItems() {
+        return $this->entity;
+	}
+    
 
 	public function setValue($value)
 	{
