@@ -194,9 +194,10 @@ class Selectize extends Nette\Forms\Controls\BaseControl
 
 	public function getValue()
 	{
-		return count($this->selectize)
-			? $this->selectize
-			: NULL;
+		if (is_array($this->selectize) && count($this->selectize) === 0) {
+			return null;
+		}
+		return $this->selectize;
 	}
 
 
