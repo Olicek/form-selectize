@@ -129,7 +129,7 @@ SelectizeForNette.prototype = {
 
 
 
-function selectize(selector, customSettings)
+function netteSelectize(selector, customSettings)
 {
     if (selector === undefined) {
         selector = $('.selectize');
