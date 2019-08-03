@@ -35,7 +35,7 @@ Last step is enable the extension using your neon config
 
 ```
 extensions:
-	selectize: App\Form\Control\SelectizeExtension
+	selectize: Oli\Selectize\SelectizeExtension
 ```
 
 ## Default configuration

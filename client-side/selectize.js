@@ -58,12 +58,12 @@ SelectizeForNette.prototype = {
         this.settings = this.element.data('options');
         this.options = {
             plugins: (this.settings.plugins === null ? null : this.settings.plugins),
-            create: this.settings.create,
+            create: this.settings.canCreate,
             delimiter: this.settings.delimiter,
             maxItems: this.settings.mode === 'select' ? 1 : this.settings.maxItems,
-            valueField: this.settings.valueField,
-            labelField: this.settings.labelField,
-            searchField: this.settings.searchField
+            valueField: this.settings.valueFieldName,
+            labelField: this.settings.labelFieldName,
+            searchField: this.settings.searchFieldName
         };
 
         if (this.settings.mode === 'full')
@@ -136,7 +136,7 @@ function netteSelectize(selector, customSettings)
     }
 
     $( selector ).each(function() {
-        if ($(this).data('options') == undefined) {
+        if ($(this).data('options') === undefined) {
             return;
         }
 

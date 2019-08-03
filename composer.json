@@ -1,5 +1,6 @@
 {
 	"name": "olicek/form-selectize",
+	"type": "library",
 	"description": "Form extension for Nette framework",
 	"homepage": "https://github.com/Olicek/form-selectize",
 	"license": "GPL-3.0",
@@ -10,14 +11,16 @@
 		}
 	],
 	"require": {
-		"php": ">= 5.4.0",
+		"php": ">= 7.2",
+		"ext-json": "*",
 		"nette/di": ">= 2.2.0",
 		"nette/forms": ">= 2.2.0",
 		"nette/php-generator": ">= 2.2.0",
 		"nette/utils": ">= 2.2.0"
-		
 	},
 	"autoload": {
-		"classmap": ["src/"]
+		"psr-4": {
+			"Oli\\Selectize\\": "src/"
+		}
 	}
 }
